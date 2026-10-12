@@ -14,10 +14,11 @@ class EasyMMAdapter:
     def __init__(self, gate: EpistemicGate | None = None):
         self.gate = gate or EpistemicGate()
 
-    def verify_decision(self, proposal: DecisionProposal) -> VerificationResult:
+    def verify_decision(self, proposal: DecisionProposal, market_records: list | None = None,
+                        evaluation_time: str | None = None) -> VerificationResult:
         start = time.perf_counter()
         claim = normalize_proposal(proposal)
-        result = self.gate.verify(claim)
+        result = self.gate.verify(claim, market_records, evaluation_time)
         latency = (time.perf_counter() - start) * 1000
 
         return VerificationResult(
