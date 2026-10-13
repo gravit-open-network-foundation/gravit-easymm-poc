@@ -156,7 +156,7 @@ This repository follows the same pattern as:
 - `gravit-dwf-poc` — capital markets & liquidity
 - `gravit-sygnum-poc` — regulated AI-agent transactions
 - `gravitnet-grok-poc` — multi-LLM verifiable integration
-- `ERC-8004-GT` — epistemic proofs for agentic finance
+- `gevp-agentic-finance-profile` (formerly ERC-8004-GT) — GEVP profile for agentic finance
 
 ---
 
