@@ -28,7 +28,7 @@ This PoC demonstrates how EasyMM can offer clients **verifiable AI market making
 ## Core Capabilities (PoC)
 
 - ✅ **EasyMM Adapter** — clean interface that receives market-making decisions from EasyMM engines
-- ✅ **Epistemic Verification Gate** — hard policy first; then the market data the decision relies on must be a *Verified Fact* for the public [Gravit Verifier](https://github.com/gravit-open-network-foundation/verifier) v0.5.0: signed records from ≥ 2 independent, registered data operators, bound to exactly that snapshot, fresh. The agent's self-reported confidences are recorded but never used to approve.
+- ✅ **Epistemic Verification Gate** — hard policy first; then the market data the decision relies on must be a *Verified Fact* for the public [Gravit Verifier](https://github.com/gravit-open-network-foundation/verifier) v0.6.0: signed records from ≥ 2 independent, registered data operators, bound to exactly that snapshot, fresh. The agent's self-reported confidences are recorded but never used to approve.
 - ✅ **Reasoning Lineage** — full trace of why a quote size / spread / skew was chosen
 - ⬜ **Grok / Multi-LLM Validation** — planned, not implemented (an earlier version marked it as done)
 - ✅ **Cryptographic Attestation** — SHA-256 trace over the claim, lineage and policy checks, reproducible (uses the claim's own timestamp)
@@ -121,7 +121,7 @@ gravit-easymm-poc/
 ```bash
 git clone https://github.com/gravit-open-network-foundation/gravit-easymm-poc.git
 cd gravit-easymm-poc
-make setup PYTHON=python3.12   # installs the Gravit Verifier at tag v0.5.0
+make setup PYTHON=python3.12   # installs the Gravit Verifier at tag v0.6.0
 make run                       # 8 scenarios -> results/pilot-results.json
 make test
 ```
@@ -157,7 +157,7 @@ This repository follows the same pattern as:
 - `gravit-dwf-poc` — capital markets & liquidity
 - `gravit-sygnum-poc` — regulated AI-agent transactions
 - `gravitnet-grok-poc` — multi-LLM verifiable integration
-- `ERC-8004-GT` — epistemic proofs for agentic finance
+- `gevp-agentic-finance-profile` (formerly ERC-8004-GT) — GEVP profile for agentic finance
 
 ---
 

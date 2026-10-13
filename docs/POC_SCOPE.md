@@ -21,7 +21,7 @@ Each scenario:
 
 - Real exchange connectivity / live order placement
 - Full production adapter to EasyMM internal systems
-- On-chain settlement of proofs (can be added later via ERC-8004-GT)
+- On-chain settlement of proofs (can be added later; see the GEVP agentic-finance profile)
 - Multi-venue smart order routing verification
 - Client portal UI (only a simple CLI + optional demo dashboard)
 

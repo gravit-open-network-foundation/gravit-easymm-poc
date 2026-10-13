@@ -49,7 +49,7 @@ class EpistemicGate:
             }
 
         # 3. The market data the decision relies on must be independently corroborated
-        #    (Gravit Verifier v0.5.0). The agent's self-reported confidences are NOT used.
+        #    (Gravit Verifier v0.6.0). The agent's self-reported confidences are NOT used.
         ev = self.evidence.verify(claim, market_records or [], evaluation_time or claim["timestamp"])
         confidence = round(float(ev["honest_share"]), 3) if ev["verified"] else 0.0
         if not ev["verified"]:

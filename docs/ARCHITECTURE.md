@@ -55,7 +55,7 @@
 - **Structural Gate** — deterministic policy checks that an LLM cannot override.
 - **Policy Engine** — client-specific and global risk limits.
 - **Lineage** — ordered list of reasoning steps with source types.
-- **Attestation** — cryptographic commitment (compatible with ERC-8004-GT style).
+- **Attestation** — cryptographic commitment (SHA-256 trace; decision records per GEVP/VEDS).
 
 ### Market Making Domain (`market_making/`)
 - Domain models for quote decisions, inventory state, volatility regimes.
@@ -79,4 +79,4 @@
 - Add new policy rules → `epistemic_core/policy.py`
 - Add new decision types → `market_making/decisions.py` + adapter
 - Plug real EasyMM internal API → replace simulation in adapter
-- Optional on-chain anchoring → use ERC-8004-GT attestation format
+- Optional on-chain anchoring → anchor the GEVP decision record

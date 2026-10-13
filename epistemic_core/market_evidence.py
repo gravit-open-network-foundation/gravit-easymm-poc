@@ -3,7 +3,7 @@ Market data the decision relies on, corroborated by independent data operators.
 
 The agent's own confidence values are never used to approve a decision (they
 are self-reported). Instead, the market snapshot the decision is based on must
-be a "Verified Fact" for the public Gravit Verifier v0.5.0: signed records from
+be a "Verified Fact" for the public Gravit Verifier v0.6.0: signed records from
 at least two independent, registered data operators, bound to exactly this
 snapshot, and fresh. TEST keys only (derived from public seeds).
 """
