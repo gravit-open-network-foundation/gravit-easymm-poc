@@ -3,6 +3,7 @@ from typing import Any
 from .policy import PolicyEngine
 from .lineage import build_lineage
 from .attestation import create_attestation
+from .market_evidence import MarketEvidenceVerifier
 
 
 class EpistemicGate:
@@ -11,11 +12,12 @@ class EpistemicGate:
     LLM output (if any) is advisory only and never enters the decision function.
     """
 
-    def __init__(self, min_confidence: float = 0.73):
+    def __init__(self, evidence: MarketEvidenceVerifier | None = None):
         self.policy = PolicyEngine()
-        self.min_confidence = min_confidence
+        self.evidence = evidence or MarketEvidenceVerifier()
 
-    def verify(self, claim: dict[str, Any]) -> dict[str, Any]:
+    def verify(self, claim: dict[str, Any], market_records: list | None = None,
+               evaluation_time: str | None = None) -> dict[str, Any]:
         # 1. Hard policy first
         policy_checks = self.policy.check(claim)
         if not self.policy.all_passed(policy_checks):
@@ -46,20 +48,21 @@ class EpistemicGate:
                 "rejection_reason": "Empty reasoning chain — no basis for action",
             }
 
-        # 3. Simple confidence heuristic (can be replaced by multi-LLM later)
-        confidences = [s.get("confidence") for s in reasoning if s.get("confidence") is not None]
-        confidence = sum(confidences) / len(confidences) if confidences else 0.85
-
-        if confidence < self.min_confidence:
+        # 3. The market data the decision relies on must be independently corroborated
+        #    (Gravit Verifier v0.6.0). The agent's self-reported confidences are NOT used.
+        ev = self.evidence.verify(claim, market_records or [], evaluation_time or claim["timestamp"])
+        confidence = round(float(ev["honest_share"]), 3) if ev["verified"] else 0.0
+        if not ev["verified"]:
             lineage = build_lineage(claim)
             attestation = create_attestation(claim, lineage, policy_checks)
             return {
                 "status": "REJECTED",
                 "trace_id": attestation["trace_id"],
-                "confidence": confidence,
+                "confidence": 0.0,
                 "policy_checks": policy_checks,
                 "attestation": attestation,
-                "rejection_reason": f"Confidence {confidence:.2f} below threshold {self.min_confidence}",
+                "market_evidence": ev,
+                "rejection_reason": f"Market data not independently corroborated: {ev['status']} ({ev['state']}) — {ev['reason']}",
             }
 
         # 4. All good → approve + attest
@@ -72,5 +75,6 @@ class EpistemicGate:
             "confidence": round(confidence, 3),
             "policy_checks": policy_checks,
             "attestation": attestation,
+            "market_evidence": ev,
             "rejection_reason": None,
         }

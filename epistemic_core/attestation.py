@@ -16,7 +16,7 @@ def create_attestation(claim: dict[str, Any], lineage: dict[str, Any], policy_ch
         "symbol": claim.get("symbol"),
         "lineage_final_hash": lineage.get("final_hash"),
         "policy_checks": policy_checks,
-        "timestamp": datetime.now(timezone.utc).isoformat(),
+        "timestamp": claim.get("timestamp"),  # the claim's own time, so the trace_id is reproducible
     }
     raw = json.dumps(material, sort_keys=True).encode()
     trace_id = hashlib.sha256(raw).hexdigest()

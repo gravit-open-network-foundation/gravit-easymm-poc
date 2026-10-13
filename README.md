@@ -28,9 +28,9 @@ This PoC demonstrates how EasyMM can offer clients **verifiable AI market making
 ## Core Capabilities (PoC)
 
 - ✅ **EasyMM Adapter** — clean interface that receives market-making decisions from EasyMM engines
-- ✅ **Epistemic Verification Gate** — structural + semantic + policy checks before any order is allowed to leave
+- ✅ **Epistemic Verification Gate** — hard policy first; then the market data the decision relies on must be a *Verified Fact* for the public [Gravit Verifier](https://github.com/gravit-open-network-foundation/verifier) v0.6.0: signed records from ≥ 2 independent, registered data operators, bound to exactly that snapshot, fresh. The agent's self-reported confidences are recorded but never used to approve.
 - ✅ **Reasoning Lineage** — full trace of why a quote size / spread / skew was chosen
-- ✅ **Grok / Multi-LLM Validation** — optional secondary verification via Grok (or any other LLM)
+- ⬜ **Grok / Multi-LLM Validation** — planned, not implemented (an earlier version marked it as done)
 - ✅ **Cryptographic Attestation** — SHA-256 trace over the claim, lineage and policy checks, reproducible (uses the claim's own timestamp)
 - ✅ **Client-facing Audit Trail** — real-time and historical proofs that EasyMM can show to projects & regulators
 - ✅ **Risk & Inventory Policy Engine** — hard limits that cannot be overridden by the LLM/agent
@@ -119,16 +119,11 @@ gravit-easymm-poc/
 ## Quick Start (5 minutes)
 
 ```bash
-git clone https://github.com/GravitOpenNetwork/gravit-easymm-poc.git
+git clone https://github.com/gravit-open-network-foundation/gravit-easymm-poc.git
 cd gravit-easymm-poc
-
-cp .env.example .env
-# (optional) add GROK_API_KEY if you want multi-LLM validation
-
-pip install -r requirements.txt
-
-# Run the pilot with three core scenarios
-python pilot/run_pilot.py
+make setup PYTHON=python3.12   # installs the Gravit Verifier at tag v0.6.0
+make run                       # 8 scenarios -> results/pilot-results.json
+make test
 ```
 
 ---
@@ -146,6 +141,12 @@ python pilot/run_pilot.py
 
 4. **Pre-TGE / Launch Quoting**  
    Special rules for thin books and launch windows → stricter policy + full lineage for exchange and project audit.
+
+5–7. **Market data not independently confirmed** — no feed, a single feed, or feeds that attest a
+   different price than the agent used → REJECTED, however confident the agent's reasoning sounds.
+
+**Status:** runnable demonstration; market-data feeds, operators and keys are fictitious
+**test fixtures**; no connection to EasyMM systems. CI regenerates `results/` on every change.
 
 ---
 

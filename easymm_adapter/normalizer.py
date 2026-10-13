@@ -15,6 +15,8 @@ def normalize_proposal(proposal: DecisionProposal) -> dict:
             "inventory_ratio": proposal.market_state.inventory_ratio,
             "volatility_regime": proposal.market_state.volatility_regime,
             "mid_price": proposal.market_state.mid_price,
+            "best_bid": proposal.market_state.best_bid,
+            "best_ask": proposal.market_state.best_ask,
             "client_limits": proposal.market_state.client_limits.model_dump(),
         },
         "proposed_action": proposal.proposed_action.model_dump(),
