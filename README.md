@@ -31,7 +31,7 @@ This PoC demonstrates how EasyMM can offer clients **verifiable AI market making
 - ✅ **Epistemic Verification Gate** — structural + semantic + policy checks before any order is allowed to leave
 - ✅ **Reasoning Lineage** — full trace of why a quote size / spread / skew was chosen
 - ✅ **Grok / Multi-LLM Validation** — optional secondary verification via Grok (or any other LLM)
-- ✅ **Cryptographic Attestation** — SHA-256 / Merkle proofs compatible with ERC-8004-GT style
+- ✅ **Cryptographic Attestation** — SHA-256 trace over the claim, lineage and policy checks, reproducible (uses the claim's own timestamp)
 - ✅ **Client-facing Audit Trail** — real-time and historical proofs that EasyMM can show to projects & regulators
 - ✅ **Risk & Inventory Policy Engine** — hard limits that cannot be overridden by the LLM/agent
 
@@ -156,7 +156,7 @@ This repository follows the same pattern as:
 - `gravit-dwf-poc` — capital markets & liquidity
 - `gravit-sygnum-poc` — regulated AI-agent transactions
 - `gravitnet-grok-poc` — multi-LLM verifiable integration
-- `ERC-8004-GT` — epistemic proofs for agentic finance
+- `gevp-agentic-finance-profile` (formerly ERC-8004-GT) — GEVP profile for agentic finance
 
 ---
 

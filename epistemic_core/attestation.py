@@ -8,7 +8,7 @@ from datetime import datetime, timezone
 def create_attestation(claim: dict[str, Any], lineage: dict[str, Any], policy_checks: list[dict]) -> dict[str, Any]:
     """
     Create a simple but deterministic cryptographic attestation.
-    Compatible in spirit with ERC-8004-GT style proofs.
+    Reproducible SHA-256 trace over the claim, lineage and policy checks.
     """
     material = {
         "claim_id": claim.get("claim_id"),
